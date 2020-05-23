@@ -1,9 +1,7 @@
 name: update
 on:
-  push:
-    branch: master
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '28 3 * * *'
 
 jobs:
   update:
