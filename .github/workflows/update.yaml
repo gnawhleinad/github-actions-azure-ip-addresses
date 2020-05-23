@@ -1,0 +1,18 @@
+name: update
+on:
+  schedule:
+    - cron: '* * * * *'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+    - run: sudo apt-get install libxml-xpath-perl
+    - uses: actions/checkout@v2
+    - run: |
+        ./get-ip-addresses >IPADDRESSES
+        git config --global user.name 'Daniel Hwang'
+        git config --global user.email 'gnawhleinad@users.noreply.github.com'
+        git add IPADDRESSES
+        git diff-index --quiet HEAD -- || (git commit -m "$(date +%s)" && git push)

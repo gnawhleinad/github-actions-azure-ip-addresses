@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+XPATHOPT=""
+[[ -f /etc/debian_version ]] && XPATHOPT="-e"
+
+DOC="https://www.microsoft.com/en-us/download/confirmation.aspx?id=56519"
+PUBLICJSON=$(curl -sS "$DOC" | \
+  xpath $XPATHOPT '//a[@data-bi-id="downloadretry"]/@href' 2>/dev/null | \
+  cut -d'"' -f 2)
+
+JQREGIONFILTER=$(sed 's,\(.*\),.id == "\1",g' REGIONS | \
+  awk '{print}' ORS=" or " | \
+  sed 's, or $,,')
+curl -sS "$PUBLICJSON" | \
+  jq -r --arg REGIONS "$JQREGIONFILTER" '.values[] | select($REGIONS) | .properties.addressPrefixes[]'
