@@ -2,6 +2,7 @@
 
 exec 42>debug.log
 BASH_XTRACEFD=42
+trap "cat debug.log" EXIT
 set -x
 
 set -euo pipefail
