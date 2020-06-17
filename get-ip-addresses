@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+exec 42>debug.log
+BASH_XTRACEFD=42
+set -x
+
 set -euo pipefail
 
 XPATHOPT=""
