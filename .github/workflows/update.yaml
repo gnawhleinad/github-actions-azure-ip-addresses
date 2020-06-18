@@ -11,6 +11,7 @@ jobs:
     - run: sudo apt-get install libxml-xpath-perl
     - uses: actions/checkout@v2
     - run: |
+        bash -x get-ip-addresses
         ./get-ip-addresses >IPADDRESSES
         git config --global user.name 'Daniel Hwang'
         git config --global user.email 'gnawhleinad@users.noreply.github.com'
