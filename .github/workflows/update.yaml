@@ -8,10 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
-    - run: sudo apt-get install libxml-xpath-perl
+    - run: |
+        sudo apt-get update -qq
+        sudo apt-get install -qq libxml-xpath-perl
     - uses: actions/checkout@v2
     - run: |
-        bash -x get-ip-addresses
         ./get-ip-addresses >IPADDRESSES
         git config --global user.name 'Daniel Hwang'
         git config --global user.email 'gnawhleinad@users.noreply.github.com'
